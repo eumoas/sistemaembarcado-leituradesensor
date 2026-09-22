@@ -1,12 +1,12 @@
 # Roteiro para apresentar o projeto
 
-As capturas já incluídas registram o funcionamento original. O circuito atual mantém todas as conexões e distribui os fios em caminhos separados. Para registrar essa apresentação atualizada, siga os passos abaixo no VS Code.
+As capturas já incluídas registram o funcionamento original. O circuito atual usa quatro fios (VCC, GND, SDA e SCL) em trajetos paralelos, sem cruzamentos. Para registrar essa apresentação atualizada, siga os passos abaixo no VS Code.
 
 ## 1. Circuito e leituras contínuas
 
 1. Pare a simulação que estiver aberta.
 2. Abra `sensor_mpu6050/wokwi.toml` e execute **Wokwi: Start Simulator** pela paleta `Ctrl + Shift + P`.
-3. O sensor deve aparecer mais afastado da placa, com os fios distribuídos por trajetos distintos.
+3. Confira o desenho: o fio vermelho sobe do VCC até 3V3; os fios verde, azul e preto contornam o sensor pela esquerda e seguem até GPIO 8, GPIO 9 e GND.
 4. Arraste a divisória acima do terminal para cima, deixando espaço para pelo menos três conjuntos completos de leituras.
 5. Aguarde cerca de cinco segundos. Confira as linhas de aceleração, velocidade angular e temperatura.
 6. Salve uma captura como `05-circuito-leituras.png`, mostrando a placa, o sensor, os fios e o terminal.

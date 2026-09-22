@@ -30,7 +30,7 @@ O objetivo é integrar a configuração do ambiente de desenvolvimento, a montag
 |---|---|---|
 | Configurar o ESP-IDF e a conta Wokwi | ESP-IDF 5.5 executado em Docker; licença Wokwi ativada no VS Code | Seção 4 e evidências da seção 9 |
 | Escolher um sensor disponível no Wokwi | MPU6050: acelerômetro, giroscópio e temperatura interna | Seção 3 |
-| Conectar o sensor ao ESP32-S3 | Alimentação de 3,3 V, GND, SDA, SCL e seleção de endereço por AD0 | `sensor_mpu6050/diagram.json` |
+| Conectar o sensor ao ESP32-S3 | Alimentação de 3,3 V, GND, SDA e SCL | Seção 3.2 e `sensor_mpu6050/diagram.json` |
 | Inicializar o sensor conforme a biblioteca | Criação do objeto, verificação de identificação, configuração das escalas e saída do modo de repouso | Seção 6 e código em C |
 | Implementar em C | Função `app_main()` e laço contínuo de aquisição | `sensor_mpu6050/main/sensor_mpu6050.c` |
 | Executar no VS Code e registrar as leituras | Wokwi utiliza o firmware compilado pelo ESP-IDF | Screenshot da seção 9 |
@@ -85,7 +85,7 @@ A temperatura apresentada corresponde à medição interna do MPU6050; em um cir
 | GND | GND.1 | Referência elétrica comum |
 | SDA | GPIO 8 | Dados do barramento I²C |
 | SCL | GPIO 9 | Clock do barramento I²C |
-| AD0 | GND, compartilhado com o sensor | Seleciona o endereço I²C `0x68` |
+| AD0 | Não conectado | Sem ligação ao VCC, o sensor usa o endereço I²C padrão `0x68` |
 | INT | Não conectado | Interrupções não são utilizadas neste programa |
 | XDA e XCL | Não conectados | Barramento auxiliar não utilizado |
 
@@ -95,7 +95,9 @@ As conexões `esp:TX → $serialMonitor:RX` e `esp:RX → $serialMonitor:TX` per
 
 O código habilita os pull-ups internos de SDA e SCL, utilizados nesta simulação. Para uma montagem física, seria necessário verificar os pull-ups presentes no módulo e dimensionar o circuito conforme as características elétricas do barramento.
 
-O arquivo [diagram.json](sensor_mpu6050/diagram.json) é a descrição completa e reproduzível das conexões. O desenho dos fios foi organizado em trajetos distintos, com vermelho para alimentação, preto para GND/AD0, verde para SDA e azul para SCL. A tabela acima permite conferir cada ligação individualmente. Essa revisão altera apenas a apresentação: os pinos e os atributos do sensor permanecem os mesmos.
+O arquivo [diagram.json](sensor_mpu6050/diagram.json) é a descrição completa e reproduzível das conexões. Os fios seguem trajetos paralelos, sem cruzamentos e sem passar por cima das placas: vermelho para VCC → 3V3, preto para GND → GND, verde para SDA → GPIO 8 e azul para SCL → GPIO 9.
+
+Na primeira versão do circuito, AD0 também estava ligado ao GND. Como AD0 fica à esquerda de SDA e SCL no conector do sensor, e o GND da placa fica abaixo dos GPIOs 8 e 9, essa ligação obrigava um fio a cruzar outro. O fio foi retirado porque a [documentação do Wokwi](https://docs.wokwi.com/parts/wokwi-mpu6050) indica que normalmente basta ligar VCC, GND, SCL e SDA e que o endereço padrão do sensor é `0x68`. AD0 só precisaria ser ligado ao VCC para usar o endereço `0x69`.
 
 ### 3.3. Valores iniciais da simulação
 
@@ -247,7 +249,7 @@ A estrutura `i2c_config_t` define o ESP32-S3 como mestre, SDA no GPIO 8, SCL no 
 mpu6050_handle_t sensor = mpu6050_create(I2C_NUM_0, MPU6050_I2C_ADDRESS);
 ```
 
-O identificador `sensor` é utilizado nas chamadas posteriores da biblioteca. `MPU6050_I2C_ADDRESS` corresponde a `0x68`, de acordo com a ligação AD0 → GND.
+O identificador `sensor` é utilizado nas chamadas posteriores da biblioteca. `MPU6050_I2C_ADDRESS` corresponde a `0x68`, o endereço padrão do sensor quando AD0 não está ligado ao VCC.
 
 O retorno é verificado: se o objeto não puder ser criado, o programa registra uma mensagem de erro e encerra `app_main()`. Criar o objeto, por si só, não confirma a presença do dispositivo; essa verificação ocorre na leitura de identificação.
 
@@ -360,7 +362,7 @@ Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura
 
 ![Simulação no VS Code com ESP32-S3, MPU6050, licença Wokwi ativa e leituras de aceleração, velocidade angular e temperatura](docs/imagens/04-simulacao-monitor-serial.png)
 
-**Figura 4 —** Captura da execução anterior à reorganização visual dos fios, com as mesmas conexões elétricas do diagrama atual: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
+**Figura 4 —** Captura da primeira versão do circuito, antes da reorganização dos fios: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. Nessa versão, AD0 também estava ligado ao GND; as outras quatro ligações são as mesmas do diagrama atual. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
 
 ### Compilação final do código do sensor
 

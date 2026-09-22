@@ -22,7 +22,7 @@ void app_main(void)
     ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_0, &config));
     ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, 0, 0, 0));
 
-    // 2. Cria o sensor no endereco 0x68 (AD0 ligado ao GND).
+    // 2. Cria o sensor no endereco padrao 0x68 (AD0 sem ligacao ao VCC).
     mpu6050_handle_t sensor = mpu6050_create(I2C_NUM_0, MPU6050_I2C_ADDRESS);
     if (sensor == NULL) {
         ESP_LOGE(TAG, "Nao foi possivel criar o sensor");
