@@ -33,8 +33,8 @@ Não é preciso mostrar chaves de licença, senhas ou tokens. A indicação de a
 - [x] Licença Wokwi visível na captura da simulação.
 - [x] Circuito e leituras incluídos.
 - [ ] Captura da compilação final incluída.
-- [ ] README e arquivos do projeto publicados no repositório informado.
-- [ ] Imagens e links conferidos na página do GitHub.
+- [x] README e arquivos do projeto publicados no repositório informado.
+- [x] Links locais conferidos e presença das quatro imagens confirmada no GitHub.
 - [ ] Link do repositório e screenshot enviados no local de entrega da disciplina.
 
 O teste de variação é complementar. Não é requisito adicional do enunciado.
