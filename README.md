@@ -1,6 +1,6 @@
 # Leitura do MPU6050 com ESP32-S3, ESP-IDF e Wokwi
 
-Projeto da disciplina de **Sistemas Embarcados**: desenvolvimento de um programa em **C**, usando o **ESP-IDF 5.5**, para inicializar um sensor **MPU6050** e apresentar suas leituras no monitor serial de uma simulação executada no **Wokwi para VS Code**.
+Projeto da unidade curricular **IA Embarcada e Modelos Compactos**: desenvolvimento de um programa em **C**, usando o **ESP-IDF 5.5**, para inicializar um sensor **MPU6050** e apresentar suas leituras no monitor serial de uma simulação executada no **Wokwi para VS Code**.
 
 O programa lê aceleração nos eixos X, Y e Z, velocidade angular nos três eixos e temperatura interna do sensor. Após cada conjunto de leituras, aguarda um segundo antes de repetir o processo.
 
@@ -10,6 +10,7 @@ O programa lê aceleração nos eixos X, Y e Z, velocidade angular nos três eix
 
 ## Sumário
 
+- [Enunciado da atividade](#enunciado-da-atividade)
 - [1. Objetivo e requisitos](#1-objetivo-e-atendimento-aos-requisitos)
 - [2. Estrutura dos arquivos](#2-estrutura-dos-arquivos)
 - [3. Sensor e circuito](#3-sensor-escolhido-e-circuito)
@@ -21,6 +22,43 @@ O programa lê aceleração nos eixos X, Y e Z, velocidade angular nos três eix
 - [9. Evidências](#9-evidências-da-atividade)
 - [10. Dificuldades e soluções](#10-dificuldades-encontradas-e-soluções)
 - [11. Referências](#11-referências-técnicas)
+- [Identificação](#identificação)
+
+## Enunciado da atividade
+
+**Atividade Avaliativa Prática 2/6 — Leitura de sensor**
+
+Desenvolver uma aplicação embarcada completa que leia dados de um sensor simulado no Wokwi e exiba os resultados no monitor serial, utilizando o ESP-IDF dentro do VS Code.
+
+**Requisitos**
+
+- Faça a configuração do ESP-IDF e da conta Wokwi.
+- Escolha um sensor disponível no Wokwi, por exemplo:
+  - DHT11 — temperatura e umidade;
+  - BMP180 — pressão e temperatura;
+  - MPU6050 — aceleração e giroscópio.
+- Monte o circuito no Wokwi conectando o sensor ao ESP32-S3, respeitando os pinos de alimentação, GND e dados.
+- Inicialização correta do sensor de acordo com a documentação da biblioteca escolhida.
+- Implemente o código em C.
+- Execute a simulação no VS Code usando a extensão Wokwi integrada com ESP-IDF e capture uma foto ou screenshot do monitor serial com os dados sendo impressos.
+
+**Critérios de avaliação**
+
+| Critério | Peso |
+|---|---|
+| Configuração do ESP-IDF e da conta Wokwi | 50% |
+| Circuito montado corretamente no Wokwi | 20% |
+| Código compilando sem erros | 20% |
+| Sensor iniciado e dados lidos corretamente | 10% |
+
+**Entrega**
+
+- Link do repositório do git com o código desenvolvido.
+- Screenshot da última etapa finalizada:
+  - configuração do ESP-IDF e da conta Wokwi;
+  - circuito montado corretamente no Wokwi;
+  - código compilando sem erros;
+  - monitor serial mostrando as leituras do sensor.
 
 ## 1. Objetivo e atendimento aos requisitos
 
@@ -34,8 +72,6 @@ O objetivo é integrar a configuração do ambiente de desenvolvimento, a montag
 | Inicializar o sensor conforme a biblioteca | Criação do objeto, verificação de identificação, configuração das escalas e saída do modo de repouso | Seção 6 e código em C |
 | Implementar em C | Função `app_main()` e laço contínuo de aquisição | `sensor_mpu6050/main/sensor_mpu6050.c` |
 | Executar no VS Code e registrar as leituras | Wokwi utiliza o firmware compilado pelo ESP-IDF | Screenshots da seção 9 |
-
-Os pesos informados na atividade são: **50%** para configuração do ESP-IDF e da conta Wokwi, **20%** para o circuito, **20%** para compilação e **10%** para inicialização e leitura do sensor.
 
 ## 2. Estrutura dos arquivos
 
@@ -427,3 +463,13 @@ Diagnósticos do editor e resultados do compilador devem ser avaliados separadam
 - [Wokwi — início de uso no VS Code](https://docs.wokwi.com/vscode/getting-started): instalação da extensão e ativação da licença.
 - [Wokwi — configuração do projeto](https://docs.wokwi.com/vscode/project-config): uso de `wokwi.toml` e `flasher_args.json`.
 - [Wokwi — definição da placa ESP32-S3-DevKitC-1](https://github.com/wokwi/wokwi-boards/blob/main/boards/esp32-s3-devkitc-1/board.json): identificação dos pinos do circuito virtual.
+
+## Identificação
+
+| | |
+|---|---|
+| **Aluna** | Miriam Aguiar |
+| **Professor** | Rodrigo Kobashikawa Rosa |
+| **Curso** | Pós-graduação em Inteligência Artificial Aplicada |
+| **Unidade curricular** | IA Embarcada e Modelos Compactos — 489780 |
+| **Atividade** | Atividade Avaliativa Prática 2/6 — Leitura de sensor |
