@@ -4,7 +4,7 @@ Projeto da disciplina de **Sistemas Embarcados**: desenvolvimento de um programa
 
 O programa lê aceleração nos eixos X, Y e Z, velocidade angular nos três eixos e temperatura interna do sensor. Após cada conjunto de leituras, aguarda um segundo antes de repetir o processo.
 
-**Resultado validado:** compilação para ESP32-S3 concluída e leituras exibidas no monitor serial do Wokwi. O circuito foi testado em simulação; não foi realizado ensaio em uma placa física.
+**Resultado validado:** compilação para ESP32-S3 concluída sem erros e leituras exibidas no monitor serial do Wokwi. A temperatura lida acompanhou as mudanças feitas no controle do sensor durante a simulação (16,2 °C a 50,4 °C). O circuito foi testado em simulação; não foi realizado ensaio em uma placa física.
 
 **Repositório:** [eumoas/sistemaembarcado-leituradesensor](https://github.com/eumoas/sistemaembarcado-leituradesensor).
 
@@ -33,7 +33,7 @@ O objetivo é integrar a configuração do ambiente de desenvolvimento, a montag
 | Conectar o sensor ao ESP32-S3 | Alimentação de 3,3 V, GND, SDA e SCL | Seção 3.2 e `sensor_mpu6050/diagram.json` |
 | Inicializar o sensor conforme a biblioteca | Criação do objeto, verificação de identificação, configuração das escalas e saída do modo de repouso | Seção 6 e código em C |
 | Implementar em C | Função `app_main()` e laço contínuo de aquisição | `sensor_mpu6050/main/sensor_mpu6050.c` |
-| Executar no VS Code e registrar as leituras | Wokwi utiliza o firmware compilado pelo ESP-IDF | Screenshot da seção 9 |
+| Executar no VS Code e registrar as leituras | Wokwi utiliza o firmware compilado pelo ESP-IDF | Screenshots da seção 9 |
 
 Os pesos informados na atividade são: **50%** para configuração do ESP-IDF e da conta Wokwi, **20%** para o circuito, **20%** para compilação e **10%** para inicialização e leitura do sensor.
 
@@ -46,13 +46,15 @@ Os pesos informados na atividade são: **50%** para configuração do ESP-IDF e 
 ├── .devcontainer/
 │   └── devcontainer.json          # Configuração opcional de Dev Container
 ├── docs/
-│   ├── EVIDENCIAS.md              # Orientação para registrar cada etapa
+│   ├── EVIDENCIAS.md              # Lista das capturas entregues
 │   └── imagens/
 │       ├── 01-esp-idf-configurado.png
 │       ├── 02-wokwi-configurado.png
-│       ├── 03-compilacao-inicial.png
-│       ├── 03-compilacao-concluida.png
-│       └── 04-simulacao-monitor-serial.png
+│       ├── 03-compilacao-final.png
+│       ├── 04-circuito-monitor-serial.png
+│       ├── 05-variacao-temperatura-50c.png
+│       ├── 06-variacao-temperatura-16c.png
+│       └── anteriores/            # Capturas de etapas anteriores
 └── sensor_mpu6050/
     ├── CMakeLists.txt             # Define o projeto ESP-IDF
     ├── sdkconfig                  # Configuração usada na compilação
@@ -315,30 +317,42 @@ Mantenha a aba do simulador visível durante a observação. Se alterar o códig
 
 ## 8. Resultados e interpretação
 
-A captura da execução mostra:
+O monitor serial da Figura 4 mostra conjuntos consecutivos de leituras, repetidos a cada ciclo do laço:
 
 ```text
 Aceleracao (g): X=0.00 Y=0.00 Z=1.00
 Rotacao (graus/s): X=0.00 Y=0.00 Z=0.00
-Temperatura: 24.00 C
+Temperatura: 31.60 C
 ```
 
-- **X e Y em 0 g:** os atributos iniciais não aplicam aceleração nesses eixos.
-- **Z em 1 g:** representa a gravidade na orientação inicial simulada. Uma leitura de 1 g pode ocorrer mesmo com o sensor parado.
+- **X e Y em 0 g:** os controles do sensor não aplicam aceleração nesses eixos.
+- **Z em 1 g:** representa a gravidade na orientação simulada. Uma leitura de 1 g ocorre mesmo com o sensor parado.
 - **Velocidades angulares em zero:** o sensor está configurado sem rotação. O texto `Rotacao` do console representa velocidade angular, e não um ângulo acumulado.
-- **24 °C:** corresponde ao valor de temperatura definido para o sensor no simulador.
+- **Temperatura:** corresponde ao valor escolhido no controle do sensor virtual. O valor inicial definido em `diagram.json` é 24 °C; na Figura 4, o controle estava em 31,6 °C.
 
-Os resultados são coerentes com os atributos configurados e confirmam comunicação com o dispositivo simulado. A compilação isolada não demonstraria o funcionamento do sensor; a evidência do monitor serial complementa essa validação.
+### Teste de variação da temperatura
 
-### Teste adicional sugerido
+Durante a simulação, o controle de temperatura do MPU6050 foi alterado. Para abrir esse controle, basta clicar no sensor. O código C não foi modificado e a simulação não foi reiniciada: o cronômetro do Wokwi avança na mesma execução.
 
-O [roteiro de apresentação](docs/APRESENTACAO.md) descreve como capturar várias leituras, variar a temperatura e registrar os resultados reais.
+| Tempo de simulação | Temperatura no controle | Leitura no monitor serial | Evidência |
+|---|---|---|---|
+| 02:53 | 31,6 °C | `Temperatura: 31.60 C` | Figura 4 |
+| 03:13 | 50,4 °C | `Temperatura: 50.40 C` | Figura 5 |
+| 03:35 | 16,2 °C | `Temperatura: 16.20 C` | Figura 6 |
 
-Para demonstrar a resposta a uma mudança de entrada, clique no sensor durante a simulação e altere uma grandeza nos controles disponíveis. Outra opção é parar a simulação, mudar um atributo em `diagram.json` e iniciá-la novamente.
-
-Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura próxima de 30 °C. Não é necessário recompilar o código C quando apenas o atributo do sensor virtual é alterado. Esse teste adicional é uma proposta de verificação; ainda não está documentado como executado nas evidências incluídas.
+A leitura acompanha cada mudança da entrada. Isso confirma que o programa consulta o sensor pelo barramento I²C a cada ciclo, em vez de imprimir valores fixos.
 
 ## 9. Evidências da atividade
+
+### Resumo para avaliação
+
+| Critério da atividade | O que foi verificado | Evidência |
+|---|---|---|
+| Configuração do ESP-IDF (50%, com a conta Wokwi) | `idf.py --version` retorna `ESP-IDF v5.5` no Docker | Figuras 1 e 3 |
+| Configuração da conta Wokwi | Conta autenticada no Wokwi e licença ativa na extensão do VS Code | Figuras 2 e 4 |
+| Circuito montado no Wokwi (20%) | VCC → 3V3, GND → GND, SDA → GPIO 8 e SCL → GPIO 9, sem cruzamento de fios | Figura 4 e [`diagram.json`](sensor_mpu6050/diagram.json) |
+| Código compilando sem erros (20%) | `Project build complete` para `esp32s3` | Figura 3 |
+| Sensor iniciado e dados lidos (10%) | Leituras contínuas no monitor serial; a temperatura acompanha o controle do sensor | Figuras 4, 5 e 6 |
 
 ### Configuração do ESP-IDF
 
@@ -350,37 +364,46 @@ Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura
 
 ![Conta autenticada no site Wokwi](docs/imagens/02-wokwi-configurado.png)
 
-**Figura 2 —** Conta autenticada no Wokwi. O exemplo Arduino/ESP32 aberto nessa etapa documenta o acesso à plataforma; o projeto entregue utiliza C, ESP-IDF e ESP32-S3, conforme a execução da Figura 4.
+**Figura 2 —** Conta autenticada no Wokwi. O exemplo Arduino/ESP32 aberto nessa etapa documenta o acesso à plataforma; o projeto entregue utiliza C, ESP-IDF e ESP32-S3. A licença da extensão no VS Code aparece no canto superior direito da Figura 4 (*Community License*).
 
-### Compilação inicial
+### Compilação sem erros
 
-![Binário inicial gerado no ambiente Docker pelo terminal do VS Code](docs/imagens/03-compilacao-inicial.png)
+![Compilação do projeto com ESP-IDF 5.5 concluída sem erros](docs/imagens/03-compilacao-final.png)
 
-**Figura 3 —** Registro da compilação inicial do projeto `sensor_mpu6050`, com binário de `0x32b10` bytes e 80% livres na partição. Essa captura antecede a inclusão do código do sensor. A compilação final, descrita na seção 5, gerou um binário de `0x380c0` bytes, com 78% livres. A tela de introdução da extensão ao fundo não é usada como comprovação da conclusão de seu assistente de configuração.
+**Figura 3 —** Compilação do código final em 22/09/2026, na imagem Docker do ESP-IDF 5.5. O terminal mostra o comando executado, a versão `ESP-IDF v5.5`, a compilação de `sensor_mpu6050.c`, o binário de `0x380c0` bytes (78% livres na partição) e a mensagem `Project build complete`. O comando descarta apenas a saída do `export.sh`, que ativa o ambiente do ESP-IDF.
 
 ### Circuito e leituras no monitor serial
 
-![Simulação no VS Code com ESP32-S3, MPU6050, licença Wokwi ativa e leituras de aceleração, velocidade angular e temperatura](docs/imagens/04-simulacao-monitor-serial.png)
+![Simulação no VS Code com ESP32-S3, MPU6050, licença Wokwi ativa e leituras no monitor serial](docs/imagens/04-circuito-monitor-serial.png)
 
-**Figura 4 —** Captura da primeira versão do circuito, antes da reorganização dos fios: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. Nessa versão, AD0 também estava ligado ao GND; as outras quatro ligações são as mesmas do diagrama atual. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
+**Figura 4 —** Simulação no VS Code com a licença Wokwi ativa. Ela mostra o circuito atual e o monitor serial com leituras consecutivas de aceleração, velocidade angular e temperatura. O painel aberto é o controle do MPU6050, com a temperatura em 31,6 °C.
 
-### Compilação final do código do sensor
+### Variação da temperatura
 
-![Compilação final concluída no terminal Docker do VS Code](docs/imagens/03-compilacao-concluida.png)
+![Controle de temperatura em 50,4 °C e leitura correspondente no monitor serial](docs/imagens/05-variacao-temperatura-50c.png)
 
-**Figura 5 —** Captura de 22/09/2026, com o código do sensor aberto e a mensagem `Project build complete` no terminal. O trecho visível também mostra a verificação do bootloader. O tamanho do binário da aplicação está documentado na seção 5; ele não aparece nesta captura.
+**Figura 5 —** Mesma execução, com o controle em 50,4 °C: o monitor serial passa a imprimir `Temperatura: 50.40 C`.
 
-### Registro das etapas
+![Controle de temperatura em 16,2 °C e leitura correspondente no monitor serial](docs/imagens/06-variacao-temperatura-16c.png)
 
-| Etapa solicitada | Situação verificada | Evidência no material atual |
-|---|---|---|
-| Configuração do ESP-IDF | `idf.py --version` retornou `ESP-IDF v5.5` no Docker | Figura 1 e resultado da seção 4 |
-| Configuração da conta Wokwi | Licença ativada e simulador em execução | Conta na Figura 2 e licença na Figura 4 |
-| Circuito montado | ESP32-S3 e MPU6050 com comunicação funcionando | Figura 4 e `diagram.json` |
-| Código compilando | Compilação final concluída para `esp32s3` | Compilação final na Figura 5; resultado detalhado na seção 5 |
-| Leituras do sensor | Dados apresentados no monitor serial | Figura 4 |
+**Figura 6 —** Mesma execução, com o controle em 16,2 °C: o monitor serial passa a imprimir `Temperatura: 16.20 C`.
 
-As orientações para organizar capturas adicionais estão em [docs/EVIDENCIAS.md](docs/EVIDENCIAS.md). As mensagens transcritas documentam os resultados observados, mas não substituem os screenshots solicitados pelo professor.
+<details>
+<summary>Registros anteriores do desenvolvimento</summary>
+
+![Compilação inicial no terminal do VS Code](docs/imagens/anteriores/03-compilacao-inicial.png)
+
+Compilação inicial do projeto, antes da inclusão do código do sensor: binário de `0x32b10` bytes, com 80% livres na partição.
+
+![Primeira versão do circuito com leituras no monitor serial](docs/imagens/anteriores/04-simulacao-monitor-serial.png)
+
+Primeira versão do circuito, com os fios sobrepostos e AD0 também ligado ao GND. As leituras, com o valor inicial de 24 °C, já confirmavam a comunicação com o sensor.
+
+![Compilação no terminal do VS Code](docs/imagens/anteriores/03-compilacao-concluida.png)
+
+Compilação no terminal do VS Code, com a mensagem `Project build complete`. O número em **Problemas** vem das marcações do editor local, e não do compilador (ver seção 10).
+
+</details>
 
 ## 10. Dificuldades encontradas e soluções
 

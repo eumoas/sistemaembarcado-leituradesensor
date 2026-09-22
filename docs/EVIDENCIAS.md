@@ -1,40 +1,25 @@
-# Capturas para a entrega
+# Capturas da entrega
 
-O README inclui cinco capturas originais: configuração do ESP-IDF, conta Wokwi, compilação inicial, compilação final e simulação com leituras. A compilação final está registrada em `03-compilacao-concluida.png`, com a mensagem `Project build complete`. A tabela também indica capturas opcionais para complementar a apresentação.
+As capturas estão em `docs/imagens/` e são apresentadas, com legendas, na [seção 9 do README](../README.md#9-evidências-da-atividade). São screenshots originais, sem alteração dos resultados.
 
-| Nome sugerido | O que deve aparecer |
-|---|---|
-| `01-esp-idf-configurado.png` | Terminal do Docker após `idf.py --version`, mostrando `ESP-IDF v5.5` |
-| `02-wokwi-configurado.png` | Confirmação da licença ativa no VS Code ou indicação da licença no simulador |
-| `03-compilacao-concluida.png` | Compilação final com `Project build complete`; já incluída |
-| `04-simulacao-monitor-serial.png` | Circuito e leituras; já incluído a partir da captura enviada |
-| `05-circuito.png` | Opcional: circuito ampliado para facilitar a identificação dos fios e pinos |
-| `06-variacao-do-sensor.png` | Opcional: alteração de uma entrada e correspondente mudança no monitor serial |
+| Arquivo | Etapa comprovada | O que aparece |
+|---|---|---|
+| `01-esp-idf-configurado.png` | Configuração do ESP-IDF | Imagem Docker baixada e `idf.py --version` retornando `ESP-IDF v5.5` |
+| `02-wokwi-configurado.png` | Conta Wokwi | Conta autenticada no site Wokwi |
+| `03-compilacao-final.png` | Código compilando sem erros | Comando de compilação, `ESP-IDF v5.5`, tamanho do binário e `Project build complete` |
+| `04-circuito-monitor-serial.png` | Circuito e leituras do sensor | Licença Wokwi ativa no VS Code, circuito ESP32-S3 + MPU6050 e leituras consecutivas no monitor serial |
+| `05-variacao-temperatura-50c.png` | Leitura do sensor | Controle de temperatura em 50,4 °C e leitura `50.40 C` |
+| `06-variacao-temperatura-16c.png` | Leitura do sensor | Controle de temperatura em 16,2 °C e leitura `16.20 C` |
 
-## Como capturar
-
-1. Para a versão do ESP-IDF, use o terminal que está dentro do contêiner.
-2. Para a compilação, entre em `/project/sensor_mpu6050` e execute `idf.py build`. Aguarde o término antes de capturar.
-3. Para o circuito e as leituras, abra o Wokwi no VS Code, mantenha o simulador visível e aumente a área do terminal para facilitar a leitura.
-4. Salve as capturas originais. Não substitua saídas de erro por textos de sucesso nem monte uma saída que não tenha ocorrido.
-5. Após adicionar novas imagens, inclua-as na seção de evidências do README e atualize a situação correspondente.
-
-Exemplo de inclusão no README, após o arquivo existir:
-
-```markdown
-![Compilação concluída no ESP-IDF](docs/imagens/03-compilacao-concluida.png)
-```
-
-Não é preciso mostrar chaves de licença, senhas ou tokens. A indicação de ativação é suficiente para documentar a configuração da conta.
+A pasta `anteriores/` guarda capturas de etapas intermediárias: a compilação inicial, a primeira versão do circuito e uma compilação no terminal do VS Code.
 
 ## Conferência antes da entrega
 
-- [x] Captura da versão do ESP-IDF incluída.
-- [x] Licença Wokwi visível na captura da simulação.
-- [x] Circuito e leituras incluídos.
-- [x] Captura da compilação final incluída.
-- [x] README e arquivos do projeto publicados no repositório informado.
-- [x] Links locais conferidos e presença das cinco imagens confirmada no GitHub.
+- [x] Versão do ESP-IDF registrada.
+- [x] Conta Wokwi autenticada e licença ativa na extensão do VS Code.
+- [x] Circuito com VCC, GND, SDA e SCL, sem cruzamento de fios.
+- [x] Compilação concluída sem erros.
+- [x] Monitor serial com várias leituras consecutivas.
+- [x] Teste de variação da temperatura executado.
+- [x] README, código e imagens publicados no repositório.
 - [ ] Link do repositório e screenshot enviados no local de entrega da disciplina.
-
-O teste de variação é complementar. Não é requisito adicional do enunciado.
