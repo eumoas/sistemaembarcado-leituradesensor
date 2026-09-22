@@ -16,7 +16,7 @@
       "type": "wokwi-mpu6050",
       "id": "mpu",
       "top": 65,
-      "left": -230,
+      "left": -300,
       "attrs": {
         "accelX": "0",
         "accelY": "0",
@@ -45,31 +45,53 @@
       "mpu:VCC",
       "esp:3V3.1",
       "red",
-      []
+      [
+        "v-80",
+        "*",
+        "h-30"
+      ]
     ],
     [
       "mpu:GND",
       "esp:GND.1",
       "black",
-      []
+      [
+        "v-100",
+        "h-40",
+        "v320",
+        "*",
+        "h-100"
+      ]
     ],
     [
       "mpu:SDA",
       "esp:8",
       "green",
-      []
+      [
+        "v-40",
+        "*",
+        "h-55"
+      ]
     ],
     [
       "mpu:SCL",
       "esp:9",
       "blue",
-      []
+      [
+        "v-20",
+        "*",
+        "h-80"
+      ]
     ],
     [
       "mpu:AD0",
       "mpu:GND",
       "black",
-      []
+      [
+        "v-120",
+        "*",
+        "v-120"
+      ]
     ]
   ],
   "serialMonitor": {

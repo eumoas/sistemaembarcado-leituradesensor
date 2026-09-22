@@ -8,6 +8,20 @@ O programa lê aceleração nos eixos X, Y e Z, velocidade angular nos três eix
 
 **Repositório:** [eumoas/sistemaembarcado-leituradesensor](https://github.com/eumoas/sistemaembarcado-leituradesensor).
 
+## Sumário
+
+- [1. Objetivo e requisitos](#1-objetivo-e-atendimento-aos-requisitos)
+- [2. Estrutura dos arquivos](#2-estrutura-dos-arquivos)
+- [3. Sensor e circuito](#3-sensor-escolhido-e-circuito)
+- [4. Configuração do ambiente](#4-configuração-do-ambiente)
+- [5. Compilação](#5-compilar-o-firmware)
+- [6. Explicação do código](#6-explicação-do-código-em-c)
+- [7. Simulação no VS Code](#7-executar-a-simulação-no-vs-code)
+- [8. Resultados](#8-resultados-e-interpretação)
+- [9. Evidências](#9-evidências-da-atividade)
+- [10. Dificuldades e soluções](#10-dificuldades-encontradas-e-soluções)
+- [11. Referências](#11-referências-técnicas)
+
 ## 1. Objetivo e atendimento aos requisitos
 
 O objetivo é integrar a configuração do ambiente de desenvolvimento, a montagem de um circuito virtual, a utilização de uma biblioteca de sensor e a execução de um firmware em C.
@@ -81,7 +95,7 @@ As conexões `esp:TX → $serialMonitor:RX` e `esp:RX → $serialMonitor:TX` per
 
 O código habilita os pull-ups internos de SDA e SCL, utilizados nesta simulação. Para uma montagem física, seria necessário verificar os pull-ups presentes no módulo e dimensionar o circuito conforme as características elétricas do barramento.
 
-O arquivo [diagram.json](sensor_mpu6050/diagram.json) é a descrição completa e reproduzível das conexões. Na visualização do Wokwi, alguns fios podem se sobrepor; a tabela acima permite conferir cada ligação individualmente.
+O arquivo [diagram.json](sensor_mpu6050/diagram.json) é a descrição completa e reproduzível das conexões. O desenho dos fios foi organizado em trajetos distintos, com vermelho para alimentação, preto para GND/AD0, verde para SDA e azul para SCL. A tabela acima permite conferir cada ligação individualmente. Essa revisão altera apenas a apresentação: os pinos e os atributos do sensor permanecem os mesmos.
 
 ### 3.3. Valores iniciais da simulação
 
@@ -316,6 +330,8 @@ Os resultados são coerentes com os atributos configurados e confirmam comunica�
 
 ### Teste adicional sugerido
 
+O [roteiro de apresentação](docs/APRESENTACAO.md) descreve como capturar várias leituras, variar a temperatura e registrar os resultados reais.
+
 Para demonstrar a resposta a uma mudança de entrada, clique no sensor durante a simulação e altere uma grandeza nos controles disponíveis. Outra opção é parar a simulação, mudar um atributo em `diagram.json` e iniciá-la novamente.
 
 Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura próxima de 30 °C. Não é necessário recompilar o código C quando apenas o atributo do sensor virtual é alterado. Esse teste adicional é uma proposta de verificação; ainda não está documentado como executado nas evidências incluídas.
@@ -344,7 +360,7 @@ Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura
 
 ![Simulação no VS Code com ESP32-S3, MPU6050, licença Wokwi ativa e leituras de aceleração, velocidade angular e temperatura](docs/imagens/04-simulacao-monitor-serial.png)
 
-**Figura 4 —** Captura da execução no VS Code: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
+**Figura 4 —** Captura da execução anterior à reorganização visual dos fios, com as mesmas conexões elétricas do diagrama atual: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
 
 ### Compilação final do código do sensor
 
