@@ -37,6 +37,7 @@ Os pesos informados na atividade são: **50%** para configuração do ESP-IDF e 
 │       ├── 01-esp-idf-configurado.png
 │       ├── 02-wokwi-configurado.png
 │       ├── 03-compilacao-inicial.png
+│       ├── 03-compilacao-concluida.png
 │       └── 04-simulacao-monitor-serial.png
 └── sensor_mpu6050/
     ├── CMakeLists.txt             # Define o projeto ESP-IDF
@@ -345,6 +346,12 @@ Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura
 
 **Figura 4 —** Captura da execução no VS Code: circuito virtual, indicação de licença Wokwi e monitor serial com os dados do sensor. O arquivo é uma cópia do screenshot original, sem alteração dos resultados apresentados.
 
+### Compilação final do código do sensor
+
+![Compilação final concluída no terminal Docker do VS Code](docs/imagens/03-compilacao-concluida.png)
+
+**Figura 5 —** Captura de 22/09/2026, com o código do sensor aberto e a mensagem `Project build complete` no terminal. O trecho visível também mostra a verificação do bootloader. O tamanho do binário da aplicação está documentado na seção 5; ele não aparece nesta captura.
+
 ### Registro das etapas
 
 | Etapa solicitada | Situação verificada | Evidência no material atual |
@@ -352,7 +359,7 @@ Por exemplo, mudar `temperature` de `"24"` para `"30"` deve produzir uma leitura
 | Configuração do ESP-IDF | `idf.py --version` retornou `ESP-IDF v5.5` no Docker | Figura 1 e resultado da seção 4 |
 | Configuração da conta Wokwi | Licença ativada e simulador em execução | Conta na Figura 2 e licença na Figura 4 |
 | Circuito montado | ESP32-S3 e MPU6050 com comunicação funcionando | Figura 4 e `diagram.json` |
-| Código compilando | Compilação final concluída para `esp32s3` | Compilação inicial na Figura 3; resultado final transcrito na seção 5 |
+| Código compilando | Compilação final concluída para `esp32s3` | Compilação final na Figura 5; resultado detalhado na seção 5 |
 | Leituras do sensor | Dados apresentados no monitor serial | Figura 4 |
 
 As orientações para organizar capturas adicionais estão em [docs/EVIDENCIAS.md](docs/EVIDENCIAS.md). As mensagens transcritas documentam os resultados observados, mas não substituem os screenshots solicitados pelo professor.

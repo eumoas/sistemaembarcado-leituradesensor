@@ -1,12 +1,12 @@
 # Capturas para a entrega
 
-O README inclui quatro capturas originais: configuração do ESP-IDF, conta Wokwi, compilação inicial e simulação com leituras. A captura da compilação inicial foi salva como `03-compilacao-inicial.png`. Para complementar a entrega, a tabela abaixo orienta o registro da compilação final e de testes opcionais.
+O README inclui cinco capturas originais: configuração do ESP-IDF, conta Wokwi, compilação inicial, compilação final e simulação com leituras. A compilação final está registrada em `03-compilacao-concluida.png`, com a mensagem `Project build complete`. A tabela também indica capturas opcionais para complementar a apresentação.
 
 | Nome sugerido | O que deve aparecer |
 |---|---|
 | `01-esp-idf-configurado.png` | Terminal do Docker após `idf.py --version`, mostrando `ESP-IDF v5.5` |
 | `02-wokwi-configurado.png` | Confirmação da licença ativa no VS Code ou indicação da licença no simulador |
-| `03-compilacao-concluida.png` | Final de `idf.py build`, mostrando `Project build complete` e o binário `sensor_mpu6050.bin` |
+| `03-compilacao-concluida.png` | Compilação final com `Project build complete`; já incluída |
 | `04-simulacao-monitor-serial.png` | Circuito e leituras; já incluído a partir da captura enviada |
 | `05-circuito.png` | Opcional: circuito ampliado para facilitar a identificação dos fios e pinos |
 | `06-variacao-do-sensor.png` | Opcional: alteração de uma entrada e correspondente mudança no monitor serial |
@@ -32,9 +32,9 @@ Não é preciso mostrar chaves de licença, senhas ou tokens. A indicação de a
 - [x] Captura da versão do ESP-IDF incluída.
 - [x] Licença Wokwi visível na captura da simulação.
 - [x] Circuito e leituras incluídos.
-- [ ] Captura da compilação final incluída.
+- [x] Captura da compilação final incluída.
 - [x] README e arquivos do projeto publicados no repositório informado.
-- [x] Links locais conferidos e presença das quatro imagens confirmada no GitHub.
+- [x] Links locais conferidos e presença das cinco imagens confirmada no GitHub.
 - [ ] Link do repositório e screenshot enviados no local de entrega da disciplina.
 
 O teste de variação é complementar. Não é requisito adicional do enunciado.
