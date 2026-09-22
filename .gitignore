@@ -1,0 +1,17 @@
+# Arquivos gerados pelo ESP-IDF (recriados com idf.py build)
+**/build/
+**/managed_components/
+**/sdkconfig.old
+
+# Configuracoes locais de ferramentas e editor
+.vscode/
+.agents/
+.codex/
+**/__pycache__/
+*.pyc
+.DS_Store
+
+# Credenciais e arquivos locais
+.env
+.env.*
+!.env.example

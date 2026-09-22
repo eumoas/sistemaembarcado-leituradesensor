@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "author": "",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {
+        "flashSize": "2"
+      }
+    },
+    {
+      "type": "wokwi-mpu6050",
+      "id": "mpu",
+      "top": 65,
+      "left": -230,
+      "attrs": {
+        "accelX": "0",
+        "accelY": "0",
+        "accelZ": "1",
+        "rotationX": "0",
+        "rotationY": "0",
+        "rotationZ": "0",
+        "temperature": "24"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "mpu:VCC",
+      "esp:3V3.1",
+      "red",
+      []
+    ],
+    [
+      "mpu:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "mpu:SDA",
+      "esp:8",
+      "green",
+      []
+    ],
+    [
+      "mpu:SCL",
+      "esp:9",
+      "blue",
+      []
+    ],
+    [
+      "mpu:AD0",
+      "mpu:GND",
+      "black",
+      []
+    ]
+  ],
+  "serialMonitor": {
+    "display": "always",
+    "newline": "lf"
+  },
+  "dependencies": {}
+}
