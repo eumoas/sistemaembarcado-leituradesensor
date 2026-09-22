@@ -468,7 +468,7 @@ Diagnósticos do editor e resultados do compilador devem ser avaliados separadam
 
 | | |
 |---|---|
-| **Aluna** | Miriam Aguiar |
+| **Aluna** | Miriam Oliveira de Aguiar Sobral |
 | **Professor** | Rodrigo Kobashikawa Rosa |
 | **Curso** | Pós-graduação em Inteligência Artificial Aplicada |
 | **Unidade curricular** | IA Embarcada e Modelos Compactos — 489780 |
